@@ -133,7 +133,7 @@
         const chatInput = document.getElementById("chat-input");
 
         if (chatInput.value.trim() !== "") {
-          fetch("http://localhost:8000/assistant", {
+          fetch("https://cryooooooo.pythonanywhere.com/assistant", {
             method: "GET",
             headers: {
               "x-api-key": localStorage.getItem("authToken"),
