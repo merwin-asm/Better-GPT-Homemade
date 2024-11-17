@@ -3,7 +3,7 @@ document.getElementById("openChatBtn")?.addEventListener("click", () => {
   if (!localStorage.getItem("authToken")) {
     window.location.href = "login.html";
   } else {
-    window.location.href = "/chat.html";
+    window.location.href = "chat.html";
   }
 });
 
