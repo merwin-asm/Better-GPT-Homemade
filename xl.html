@@ -78,7 +78,7 @@
         }
 
         if (formData.has("file") || formData.has("prompt")) {
-          fetch("http://localhost:8000/excel_report", {
+          fetch("https://cryooooooo.pythonanywhere.com/excel_report", {
             method: "POST",
             headers: {
               "x-api-key": localStorage.getItem("authToken"),
