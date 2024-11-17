@@ -129,7 +129,7 @@
         const chatInput = document.getElementById("chat-input");
 
         if (chatInput.value.trim() !== "") {
-          fetch("http://localhost:8000/wikipedia", {
+          fetch("https://cryooooooo.pythonanywhere.com/wikipedia", {
             method: "GET",
             headers: {
               "x-api-key": localStorage.getItem("authToken"),
