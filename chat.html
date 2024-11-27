@@ -125,7 +125,7 @@
         const chatInput = document.getElementById("chat-input");
         const apiKey = localStorage.getItem("authToken");
       
-        fetch("http://localhost:8000/get_chat", {
+        fetch("https://bananaaai.pythonanywhere.com/get_chat", {
           method: "GET",
           headers: {
             "x-api-key": apiKey,
@@ -179,7 +179,7 @@ function sendMessage() {
         // Disable the button to prevent multiple clicks
         sendButton.disabled = true;
 
-        fetch("http://localhost:8000/assistant", {
+        fetch("https://bananaaai.pythonanywhere.com/assistant", {
             method: "GET",
             headers: {
                 "x-api-key": localStorage.getItem("authToken"),
