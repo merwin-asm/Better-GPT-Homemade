@@ -37,20 +37,20 @@
             id="dropdown-menu"
             class="absolute left-0 mt-2 w-40 bg-gray-800 bg-opacity-75 backdrop-blur-lg text-white rounded-lg shadow-lg hidden"
           >
-            <a href="./chat.html" class="block px-4 py-2 hover:bg-gray-700"
+            <a href="chat.html" class="block px-4 py-2 hover:bg-gray-700"
               >Default Mode</a
             >
-            <a href="./wiki.html" id="humanize" class="block px-4 py-2 hover:bg-gray-700"
+            <a href="wiki.html" id="humanize" class="block px-4 py-2 hover:bg-gray-700"
               >Wikipedia</a
             >
             <a
-              href="./pdf.html"
+              href="pdf.html"
               id="pdf"
               class="block px-4 py-2 hover:bg-gray-700"
               >PDF Generator</a
             >
             <a
-              href="./xl.html"
+              href="xl.html"
               id="pdf"
               class="block px-4 py-2 hover:bg-gray-700"
               >Excel Analyzer</a
@@ -114,7 +114,7 @@
         const chatInput = document.getElementById("chat-input");
         const apiKey = localStorage.getItem("authToken");
       
-        fetch("https://bananaaai.pythonanywhere.com/get_chat", {
+        fetch("https://cryooooooo.pythonanywhere.com/get_chat", {
           method: "GET",
           headers: {
             "x-api-key": apiKey,
@@ -167,7 +167,7 @@ function sendMessage() {
         // Disable the button to prevent multiple clicks
         sendButton.disabled = true;
 
-        fetch("https://bananaaai.pythonanywhere.com/hmn_assistant", {
+        fetch("https://cryooooooo.pythonanywhere.com/hmn_assistant", {
             method: "GET",
             headers: {
                 "x-api-key": localStorage.getItem("authToken"),
