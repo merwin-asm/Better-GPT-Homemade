@@ -24,7 +24,7 @@ function validateVerifyForm() {
   const verifyError = document.getElementById("verifyError");
   const email = document.getElementById("email").value;
 
-  fetch("http://localhost:8000/login_code", {
+  fetch("https://cryooooooo.pythonanywhere.com/login_code", {
     method: "GET",
     headers: {
       "x-email-id": email,
@@ -60,7 +60,7 @@ function validateLoginForm() {
     loginError.style.display = "none";
 
     // Login email req
-    fetch("http://localhost:8000/login", {
+    fetch("https://cryooooooo.pythonanywhere.com/login", {
       method: "GET",
       headers: {
         "x-email-id": email,
@@ -132,7 +132,7 @@ function updateAuthButton() {
 
 // Handle logout functionality
 function logout() {
-  fetch("http://localhost:8000/logout", {
+  fetch("https://cryooooooo.pythonanywhere.com/logout", {
     method: "GET",
     headers: {
       "x-api-key": localStorage.getItem("authToken"),
