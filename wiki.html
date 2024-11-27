@@ -22,7 +22,7 @@
        >
       <div class="flex items-center">
         <h1 class="text-3xl font-bold text-white">
-          <a href="./index.html">Cryo</a>
+          <a href="index.html">Cryo</a>
         </h1>
         <div class="relative" style="margin-left: 25px">
           <button
@@ -37,20 +37,20 @@
             id="dropdown-menu"
             class="absolute left-0 mt-2 w-40 bg-gray-800 bg-opacity-75 backdrop-blur-lg text-white rounded-lg shadow-lg hidden"
           >
-            <a href="./chat.html" class="block px-4 py-2 hover:bg-gray-700"
+            <a href="chat.html" class="block px-4 py-2 hover:bg-gray-700"
               >Default Mode</a
             >
-            <a href="./humanize.html" id="humanize" class="block px-4 py-2 hover:bg-gray-700"
+            <a href="humanize.html" id="humanize" class="block px-4 py-2 hover:bg-gray-700"
               >Humanize Mode</a
             >
             <a
-              href="./pdf.html"
+              href="pdf.html"
               id="pdf"
               class="block px-4 py-2 hover:bg-gray-700"
               >PDF Generator</a
             >
             <a
-              href="./xl.html"
+              href="xl.html"
               id="pdf"
               class="block px-4 py-2 hover:bg-gray-700"
               >Excel Analyzer</a
@@ -115,7 +115,7 @@
         const chatInput = document.getElementById("chat-input");
         const apiKey = localStorage.getItem("authToken");
       
-        fetch("https://bananaaai.pythonanywhere.com/get_chat", {
+        fetch("https://cryooooooo.pythonanywhere.com/get_chat", {
           method: "GET",
           headers: {
             "x-api-key": apiKey,
@@ -168,7 +168,7 @@ function sendMessage() {
         sendButton.disabled = true; // Disable the button to prevent multiple clicks
 
         // Send the message to the backend (in this case, the Wikipedia API)
-        fetch("https://bananaaai.pythonanywhere.com/wikipedia", {
+        fetch("https://cryooooooo.pythonanywhere.com/wikipedia", {
             method: "GET",
             headers: {
                 "x-api-key": localStorage.getItem("authToken"),
