@@ -115,7 +115,7 @@
         const chatInput = document.getElementById("chat-input");
         const apiKey = localStorage.getItem("authToken");
       
-        fetch("http://localhost:8000/get_chat", {
+        fetch("https://bananaaai.pythonanywhere.com/get_chat", {
           method: "GET",
           headers: {
             "x-api-key": apiKey,
@@ -168,7 +168,7 @@ function sendMessage() {
         sendButton.disabled = true; // Disable the button to prevent multiple clicks
 
         // Send the message to the backend (in this case, the Wikipedia API)
-        fetch("http://localhost:8000/wikipedia", {
+        fetch("https://bananaaai.pythonanywhere.com/wikipedia", {
             method: "GET",
             headers: {
                 "x-api-key": localStorage.getItem("authToken"),
