@@ -24,7 +24,7 @@ function validateVerifyForm() {
   const verifyError = document.getElementById("verifyError");
   const email = document.getElementById("email").value;
 
-  fetch("https://cryooooooo.pythonanywhere.com/login_code", {
+  fetch("http://localhost:8000/login_code", {
     method: "GET",
     headers: {
       "x-email-id": email,
@@ -60,7 +60,7 @@ function validateLoginForm() {
     loginError.style.display = "none";
 
     // Login email req
-    fetch("https://cryooooooo.pythonanywhere.com/login", {
+    fetch("http://localhost:8000/login", {
       method: "GET",
       headers: {
         "x-email-id": email,
@@ -87,11 +87,15 @@ function validateLoginForm() {
 // Update the auth button based on token
 function updateAuthButton() {
   const authButtonContainer = document.getElementById("authButtonContainer");
+  const mobileAuthButtonContainer = document.getElementById("mobileAuthButtonContainer");
   const openChatBtn = document.getElementById("openChatBtn");
   const token = localStorage.getItem("authToken");
 
   if (token) {
     authButtonContainer.innerHTML = `
+      <a href="#" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full" onclick="logout()">Logout</a>
+    `;
+    mobileAuthButtonContainer.innerHTML = `
       <a href="#" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full" onclick="logout()">Logout</a>
     `;
     openChatBtn.innerHTML = `
@@ -108,6 +112,9 @@ function updateAuthButton() {
     authButtonContainer.innerHTML = `
       <a href="login.html" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Login</a>
     `;
+    mobileAuthButtonContainer.innerHTML = `
+      <a href="login.html" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Login</a>
+    `;
     openChatBtn.innerHTML = `
       <div class="flex space-x-4">
         <button id="openChatBtn" class="btn">
@@ -121,9 +128,11 @@ function updateAuthButton() {
   }
 }
 
+
+
 // Handle logout functionality
 function logout() {
-  fetch("https://cryooooooo.pythonanywhere.com/logout", {
+  fetch("http://localhost:8000/logout", {
     method: "GET",
     headers: {
       "x-api-key": localStorage.getItem("authToken"),

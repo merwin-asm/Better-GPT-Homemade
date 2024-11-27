@@ -6,53 +6,128 @@
     <title>Cryo AI Chat</title>
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="chat.css">
+    <link rel="stylesheet" href="chat.css" />
   </head>
   <body class="font-poppins">
-    <header class="flex justify-between items-center p-6 bg-gray-800 bg-opacity-75 sticky">
+    <header
+      class="flex justify-between items-center p-6 bg-gray-800 bg-opacity-75 sticky"
+    >
       <div class="flex items-center">
         <h1 class="text-3xl font-bold text-white">
           <a href="./index.html">Cryo</a>
         </h1>
         <div class="relative" style="margin-left: 25px">
-          <button class="text-white bg-opacity-30 backdrop-blur-lg bg-gray-600 px-4 py-2 rounded-lg hover:bg-opacity-50 flex items-center" id="modes-button" onclick="toggleDropdown()">
+          <button
+            class="text-white bg-opacity-30 backdrop-blur-lg bg-gray-600 px-4 py-2 rounded-lg hover:bg-opacity-50 flex items-center"
+            id="modes-button"
+            onclick="toggleDropdown()"
+          >
             Excel Analyzer <i class="fas fa-chevron-down ml-2"></i>
           </button>
-          <div id="dropdown-menu" class="absolute left-0 mt-2 w-40 bg-gray-800 bg-opacity-75 backdrop-blur-lg text-white rounded-lg shadow-lg hidden">
-            <a href="#" id="humanize" class="block px-4 py-2 hover:bg-gray-700">Humanize Mode</a>
-            <a href="./pdf.html" id="pdf" class="block px-4 py-2 hover:bg-gray-700">PDF Generator</a>
-            <a href="./wiki.html" id="pdf" class="block px-4 py-2 hover:bg-gray-700">Wikipedia</a>
+          <div
+            id="dropdown-menu"
+            class="absolute left-0 mt-2 w-40 bg-gray-800 bg-opacity-75 backdrop-blur-lg text-white rounded-lg shadow-lg hidden"
+          >
+            <a href="./chat.html" class="block px-4 py-2 hover:bg-gray-700"
+              >Default Mode</a
+            >
+            <a
+              href="./humanize.html"
+              id="humanize"
+              class="block px-4 py-2 hover:bg-gray-700"
+              >Humanize Mode</a
+            >
+            <a
+              href="./pdf.html"
+              id="pdf"
+              class="block px-4 py-2 hover:bg-gray-700"
+              >PDF Generator</a
+            >
+            <a
+              href="./wiki.html"
+              id="pdf"
+              class="block px-4 py-2 hover:bg-gray-700"
+              >Wikipedia</a
+            >
           </div>
         </div>
       </div>
 
-      <div class="md:hidden">
-        <button class="text-white focus:outline-none" id="menu-button">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
+      <nav class="flex items-center justify-between w-full" id="menu">
+        <!-- Left-aligned content (optional for other menu items) -->
+        <ul class="flex space-x-6 ml-12"></ul>
+
+        <!-- Auth button container, mobile and desktop -->
+        <ul class="flex space-x-6 ml-auto" id="authButtonContainer">
+          <a
+            href="#"
+            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
+            onclick="logout()"
+          >
+            Logout
+          </a>
+        </ul>
+      </nav>
     </header>
 
     <div class="main">
       <div class="chat-container">
         <ul class="chat-output" id="chat-output">
-          <li>Hello how can I assist you today? Use the Mode button in the top to change my mode⬆️</li>
+          <li>
+            Hello how can I assist you today? Use the Mode button in the top to
+            change my mode⬆️
+          </li>
         </ul>
-        <div class="chat-input-container">
-          <input type="text" id="chat-input" class="flex-1 p-2 border rounded-lg dark:bg-zinc-700 dark:text-white dark:border-zinc-600 text-sm" placeholder="Type your message..." />
-          <button class="send-btn" onclick="sendMessage()">Send</button>
 
-          <!-- File Upload Button -->
-          <input type="file" id="file-upload" class="hidden" accept=".xlsx, .xls, .csv" />
-          <label for="file-upload" class="cursor-pointer text-white bg-green-500 hover:bg-green-700 font-bold py-2 px-4 rounded-full flex items-center">
-            <i class="fas fa-upload mr-2"></i> Upload Excel File
-          </label>
+        <div
+          class="chat-input-container flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-4 w-full"
+        >
+          <!-- Chat Input -->
+          <input
+            type="text"
+            id="chat-input"
+            class="flex-1 p-2 border rounded-lg dark:bg-zinc-700 dark:text-white dark:border-zinc-600 text-sm w-full sm:w-auto"
+            placeholder="Type your message..."
+          />
+
+          <!-- File Upload Button (placed below and left-aligned) -->
+          <div class="w-full sm:w-auto">
+            <input
+              type="file"
+              id="file-upload"
+              class="hidden"
+              accept=".xlsx, .xls, .csv"
+            />
+            <label
+              for="file-upload"
+              class="cursor-pointer text-white bg-gradient-to-r from-teal-500 to-blue-500 hover:from-teal-600 hover:to-blue-600 font-bold py-2 px-4 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl w-full sm:w-auto max-w-xs mx-auto sm:mx-0 mt-2 sm:mt-0"
+            >
+              <i class="fas fa-upload text-xl sm:text-2xl"></i> Upload Excel
+              File
+            </label>
+          </div>
+          <!-- Send Button -->
+          <button
+            class="send-btn text-white bg-teal-500 hover:bg-teal-600 font-bold py-2 px-4 rounded-full w-full sm:w-auto mt-2 sm:mt-0"
+            id="send-button"
+            onclick="sendMessage()"
+          >
+            Send
+          </button>
         </div>
       </div>
     </div>
+
+    <script src="script.js"></script>
 
     <script>
       window.onload = function () {
@@ -62,59 +137,92 @@
         }
       };
 
+      let isRequestInProgress = false; // Flag to track if a request is in progress
+
       function sendMessage(event) {
-        const chatOutput = document.getElementById("chat-output");
-        const chatInput = document.getElementById("chat-input");
-        const fileInput = document.getElementById("file-upload");
-
-        const formData = new FormData();
-
-        if (fileInput.files.length > 0) {
-          formData.append("file", fileInput.files[0]);
-        }
-
-        if (chatInput.value.trim() !== "") {
-          formData.append("prompt", chatInput.value);
-        }
-
-        if (formData.has("file") || formData.has("prompt")) {
-          fetch("https://cryooooooo.pythonanywhere.com/excel_report", {
-            method: "POST",
-            headers: {
-              "x-api-key": localStorage.getItem("authToken"),
-            },
-            body: formData,  
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              const messageItem = document.createElement("li");
-              messageItem.textContent = chatInput.value || "Excel file uploaded.";
-              messageItem.classList.add("user-message");
-
-              chatOutput.insertBefore(messageItem, chatOutput.firstChild);
-
-              const reportItem = document.createElement("li");
-              reportItem.textContent = data.res || "No report generated.";  
-              reportItem.classList.add("chat-output");
-
-              chatOutput.insertBefore(reportItem, chatOutput.firstChild);
-
-              chatInput.value = "";
-              fileInput.value = "";
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
-        }
+          event.preventDefault(); // Prevent form submission
+      
+          const chatOutput = document.getElementById("chat-output");
+          const chatInput = document.getElementById("chat-input");
+          const fileInput = document.getElementById("file-upload");
+          const sendButton = document.getElementById("send-button"); // Assuming the send button has this ID
+      
+          // If no request is in progress, proceed
+          if (!isRequestInProgress) {
+              isRequestInProgress = true; // Set the flag to true when a request starts
+              sendButton.disabled = true; // Disable the send button to prevent multiple clicks
+      
+              const formData = new FormData();
+      
+              if (fileInput.files.length > 0) {
+                  formData.append("file", fileInput.files[0]);
+              }
+      
+              if (chatInput.value.trim() !== "") {
+                  formData.append("prompt", chatInput.value);
+              }
+      
+              // If there's a file or prompt, proceed with the request
+              if (formData.has("file") || formData.has("prompt")) {
+                  fetch("https://cryooooooo.pythonanywhere.com/excel_report", {
+                      method: "POST",
+                      headers: {
+                          "x-api-key": localStorage.getItem("authToken"),
+                      },
+                      body: formData,
+                  })
+                      .then((response) => response.json())
+                      .then((data) => {
+                          // Add user's message
+                          const messageItem = document.createElement("li");
+                          messageItem.textContent =
+                              chatInput.value || "Excel file uploaded.";
+                          messageItem.classList.add("user-message");
+                          chatOutput.insertBefore(messageItem, chatOutput.firstChild);
+      
+                          // Add the AI's response
+                          const reportItem = document.createElement("li");
+                          reportItem.textContent = data.res || "No report generated.";
+                          reportItem.classList.add("chat-output");
+                          chatOutput.insertBefore(reportItem, chatOutput.firstChild);
+      
+                          // Clear the inputs
+                          chatInput.value = "";
+                          fileInput.value = "";
+                      })
+                      .catch((error) => {
+                          console.error("Error:", error);
+                          alert("An error occurred. Please try again.");
+                      })
+                      .finally(() => {
+                          // Re-enable the button after the request is done and reset the flag
+                          sendButton.disabled = false;
+                          isRequestInProgress = false; // Reset the flag after the request is completed
+                      });
+              } else {
+                  // Re-enable the button if no file or prompt is present
+                  sendButton.disabled = false;
+                  isRequestInProgress = false;
+              }
+          }
       }
-
-      event.preventDefault
+      
+      // Add event listener to the "Send" button to trigger sendMessage
+      document.getElementById("send-button").addEventListener("click", sendMessage);
+      
+      // Optional: Add event listener for "Enter" key press to allow Enter to trigger sendMessage
+      document.getElementById("chat-input").addEventListener("keydown", function(event) {
+          if (event.key === "Enter" && !event.shiftKey) { // If Enter is pressed without Shift (no new line)
+              event.preventDefault(); // Prevent the default action of "Enter" (new line)
+              sendMessage(event); // Trigger sendMessage when Enter is pressed
+          }
+      });
+      
 
       function toggleDropdown() {
         const dropdownMenu = document.getElementById("dropdown-menu");
         dropdownMenu.classList.toggle("hidden");
       }
     </script>
-
   </body>
 </html>

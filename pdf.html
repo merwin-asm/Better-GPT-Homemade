@@ -13,7 +13,7 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="chat.css">
+    <link rel="stylesheet" href="chat.css" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="font-poppins">
@@ -40,7 +40,10 @@
             <a href="./chat.html" class="block px-4 py-2 hover:bg-gray-700"
               >Default Mode</a
             >
-            <a href="#" id="humanize" class="block px-4 py-2 hover:bg-gray-700"
+            <a
+              href="./humanize.html"
+              id="humanize"
+              class="block px-4 py-2 hover:bg-gray-700"
               >Humanize Mode</a
             >
             <a
@@ -59,29 +62,26 @@
         </div>
       </div>
 
-      <div class="md:hidden">
-        <button class="text-white focus:outline-none" id="menu-button">
-          <i class="fas fa-bars"></i>
-        </button>
-      </div>
-
-      <nav class="hidden md:flex space-x-6 w-full justify-between" id="menu">
+      <nav class="flex items-center justify-between w-full" id="menu">
+        <!-- Left-aligned content (optional for other menu items) -->
         <ul class="flex space-x-6 ml-12"></ul>
-        <ul class="flex space-x-6" id="authButtonContainer">
+
+        <!-- Auth button container, mobile and desktop -->
+        <ul class="flex space-x-6 ml-auto" id="authButtonContainer">
           <a
             href="#"
             class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
             onclick="logout()"
-            >Logout</a
           >
+            Logout
+          </a>
         </ul>
       </nav>
     </header>
 
     <div class="main">
       <div class="chat-container">
-        <ul class="chat-output" id="chat-output">
-        </ul>
+        <ul class="chat-output" id="chat-output"></ul>
         <div class="chat-input-container">
           <input
             type="text"
@@ -89,10 +89,18 @@
             class="flex-1 p-2 border rounded-lg dark:bg-zinc-700 dark:text-white dark:border-zinc-600 text-sm"
             placeholder="Type your message..."
           />
-          <button class="send-btn" onclick="sendMessage(event)">Send</button>
+          <button
+            class="send-btn"
+            id="send-button"
+            onclick="sendMessage(event)"
+          >
+            Send
+          </button>
         </div>
       </div>
     </div>
+
+    <script src="script.js"></script>
 
     <script>
       window.onload = function () {
@@ -107,14 +115,21 @@
         const chatInput = document.getElementById("chat-input");
         const prompt = chatInput.value.trim();
         const chatOutput = document.getElementById("chat-output");
-
+        const sendButton = document.getElementById("send-button");
+      
+        // Avoid multiple clicks by disabling the button
+        if (sendButton.disabled) return;
+      
         if (prompt) {
+          sendButton.disabled = true; // Disable the button
+          chatInput.value = ""; // Clear input field immediately
+      
           const userMessageElement = document.createElement("li");
           userMessageElement.classList.add("user-message");
           userMessageElement.textContent = `${prompt}`;
           chatOutput.appendChild(userMessageElement);
-
-          const apiUrl = "https://cryooooooo.pythonanywhere.com/pdf_ai"; 
+      
+          const apiUrl = "http://localhost:8000/pdf_ai";
           fetch(apiUrl, {
             method: "GET",
             headers: {
@@ -124,32 +139,42 @@
           })
             .then((response) => {
               if (!response.ok) throw new Error("Failed to fetch PDF");
-              return response.blob(); 
+              return response.blob();
             })
             .then((data) => {
               const url = window.URL.createObjectURL(data);
               const link = document.createElement("a");
               link.href = url;
               link.download = `cryo_pdf.pdf`;
-              link.click(); 
-
+              link.click();
+      
               const aiMessageElement = document.createElement("li");
               aiMessageElement.classList.add("ai-message");
-              aiMessageElement.textContent = `AI: PDF generated and downloaded for "${prompt}"`;
+              aiMessageElement.textContent = `PDF generated and downloaded for "${prompt}"`;
               chatOutput.appendChild(aiMessageElement);
-
-              chatInput.value = ""; 
-              chatOutput.scrollTop = chatOutput.scrollHeight; 
+      
+              chatOutput.scrollTop = chatOutput.scrollHeight;
             })
-            .catch((error) => console.error("Error:", error));
+            .catch((error) => console.error("Error:", error))
+            .finally(() => {
+              sendButton.disabled = false; // Re-enable the button
+            });
         }
       }
-
+      
+      // Add an event listener for the Enter key
+      const chatInput = document.getElementById("chat-input");
+      const sendButton = document.getElementById("send-button");
+      chatInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          sendButton.click();
+        }
+      });
+      
       function toggleDropdown() {
         const dropdownMenu = document.getElementById("dropdown-menu");
         dropdownMenu.classList.toggle("hidden");
       }
     </script>
-
   </body>
 </html>

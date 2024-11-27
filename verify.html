@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cryo Verify</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <form
+        id="verifyForm"
+        class="form"
+        onsubmit="return validateVerifyForm()"
+      >
+        <div class="flex-column">
+          <label>Verification Code</label>
+        </div>
+        <div class="inputForm">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            viewBox="0 0 32 32"
+            height="20"
+          >
+            <g data-name="Layer 3" id="Layer_3">
+              <path
+                d="m30.853 13.87a15 15 0 0 0 -29.729 4.082 15.1 15.1 0 0 0 12.876 12.918 15.6 15.6 0 0 0 2.016.13 14.85 14.85 0 0 0 7.715-2.145 1 1 0 1 0 -1.031-1.711 13.007 13.007 0 1 1 5.458-6.529 2.149 2.149 0 0 1 -4.158-.759v-10.856a1 1 0 0 0 -2 0v1.726a8 8 0 1 0 .2 10.325 4.135 4.135 0 0 0 7.83.274 15.2 15.2 0 0 0 .823-7.455zm-14.853 8.13a6 6 0 1 1 6-6 6.006 6.006 0 0 1 -6 6z"
+              ></path>
+            </g>
+          </svg>
+          <input
+            id="verificationCode"
+            placeholder="Enter your Verification Code"
+            class="input"
+            type="text"
+          />
+        </div>
+        <button
+          type="button"
+          onclick="validateVerifyForm()"
+          class="button-submit"
+        >
+          Verify Code
+        </button>
+        <p id="verifyError" style="color: red; display: none">
+          Please enter a valid numeric code.
+        </p>
+      </form>
+    </div>
+    <script src="script.js"></script>
+    <script>
+      
+function validateVerifyForm() {
+  const verificationCode = document.getElementById("verificationCode").value;
+  const verifyError = document.getElementById("verifyError");
+  const email = localStorage.getItem("userEmail"); // Retrieve email from localStorage
+
+  fetch("http://localhost:8000/login_code", {
+    method: "GET",
+    headers: {
+      "x-email-id": email,
+      "x-code": verificationCode,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const apiKey = data["ret"];
+      if (apiKey.includes("incorrect")) {
+        verifyError.textContent = "Invalid verification code.";
+        verifyError.style.display = "block";
+      } else {
+
+        localStorage.setItem("authToken", apiKey);
+        verifyError.style.display = "none";
+
+        window.location.href = "chat.html";
+      }
+    })
+    .catch((error) => {
+      console.error("Error verifying code:", error);
+      verifyError.textContent = "An error occurred. Please try again.";
+      verifyError.style.display = "block";
+    });
+}
+
+    </script>
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            background-color: #313131;
+            background-image: radial-gradient(
+              rgba(255, 255, 255, 0.171) 2px,
+              transparent 0
+            );
+            background-size: 30px 30px;
+            background-position: -5px -5px;
+          }
+    
+          .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+    
+          .form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background-color: #ffffff;
+            padding: 30px;
+            width: 450px;
+            border-radius: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+              Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            margin-top: 150px;
+          }
+    
+          ::placeholder {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+              Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+          }
+    
+          .flex-column > label {
+            color: #151717;
+            font-weight: 600;
+          }
+    
+          .inputForm {
+            border: 1.5px solid #ecedec;
+            border-radius: 10px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            transition: 0.2s ease-in-out;
+          }
+    
+          .input {
+            margin-left: 10px;
+            border-radius: 10px;
+            border: none;
+            width: 100%;
+            height: 100%;
+          }
+    
+          .input:focus {
+            outline: none;
+          }
+    
+          .inputForm:focus-within {
+            border: 1.5px solid #2d79f3;
+          }
+    
+          .button-submit {
+            margin: 20px 0 10px 0;
+            background-color: #151717;
+            border: none;
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 10px;
+            height: 50px;
+            width: 100%;
+            cursor: pointer;
+          }
+    </style>
+  </body>
+</html>
